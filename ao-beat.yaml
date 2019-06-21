@@ -1,0 +1,29 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    service: beat
+  name: beat
+  namespace: cabot
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: beat
+    spec:
+      containers:
+      - args:
+        - celery
+        - beat
+        - -A
+        - cabot
+        envFrom:
+        - configMapRef:
+            name: cabot-default-config
+        - configMapRef:
+            name: cabot-production-config
+        image: cabotapp/cabot:0.11.12
+        name: beat
+      restartPolicy: Always

@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+data:
+  ADMIN_EMAIL: admin@example.com
+  CABOT_FROM_EMAIL: cabot@example.com
+  DJANGO_SECRET_KEY: <SET ME>
+  EMAIL_HOST: smtp.gmail.com
+  EMAIL_PASSWORD: '*********'
+  EMAIL_PORT: "587"
+  EMAIL_USE_TLS: "1"
+  EMAIL_USER: '********@gmail.com'
+  TIME_ZONE: Etc/UTC
+  WWW_HTTP_HOST: cabot.example.com
+  WWW_SCHEME: http
+kind: ConfigMap
+metadata:
+  name: cabot-production-config
+  namespace: cabot
+---
+apiVersion: v1
+data:
+  CABOT_PLUGINS_ENABLED: cabot_alert_hipchat,cabot_alert_twilio,cabot_alert_email,cabot_alert_slack
+  CELERY_BROKER_URL: amqp://guest:guest@10.100.44.108:5672//
+  DATABASE_URL: postgres://postgres@10.105.38.89:5432/postgres
+  DJANGO_SETTINGS_MODULE: cabot.settings
+  HTTP_USER_AGENT: Cabot
+  LOG_FILE: /dev/null
+kind: ConfigMap
+metadata:
+  name: cabot-default-config
+  namespace: cabot
